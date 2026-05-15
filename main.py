@@ -6,6 +6,7 @@ from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel
 
 from exceptions import APIException, api_exception_handler, validation_exception_handler
+from books import router as books_router
 
 
 @asynccontextmanager
@@ -18,6 +19,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Light 💡", lifespan=lifespan)
 app.add_exception_handler(APIException, api_exception_handler)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.include_router(books_router)
 
 
 @app.get("/")
